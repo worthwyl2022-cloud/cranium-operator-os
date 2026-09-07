@@ -1,0 +1,7 @@
+{
+  "name": "WorthWyl Creative OS",
+  "description": "A cognitive operating system for creators, uniting Cranium Core intelligence, multi-track studio timeline, media rendering, and generational Miracle Archive.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
