@@ -11,8 +11,9 @@ import MetacognitiveView from './worthwyl/metacognition/MetacognitiveView';
 import CreatorStudioView from './worthwyl/studio/CreatorStudioView';
 import ResonanceFieldView from './worthwyl/physics/ResonanceFieldView';
 import DiligenceDataRoom from './worthwyl/diligence/DiligenceDataRoom';
+import GlobalAiBar from './worthwyl/common/GlobalAiBar';
 
-type ActiveView = 'demo' | 'metacognition' | 'studio' | 'physics' | 'diligence';
+export type ActiveView = 'demo' | 'metacognition' | 'studio' | 'physics' | 'diligence';
 
 export default function App() {
   const [activeView, setActiveView] = useState<ActiveView>('demo');
@@ -183,7 +184,7 @@ export default function App() {
       </header>
 
       {/* Main OS View Area */}
-      <main className="max-w-7xl mx-auto px-4 py-6 flex-1 w-full space-y-6">
+      <main className="max-w-7xl mx-auto px-4 py-6 pb-32 flex-1 w-full space-y-6">
         {activeView === 'demo' && (
           <AcquisitionVideoDemo 
             onNavigateToModule={(mod) => setActiveView(mod === 'tracker' ? 'metacognition' : mod as ActiveView)} 
@@ -219,7 +220,7 @@ export default function App() {
       </main>
 
       {/* OS Status Footer */}
-      <footer className="bg-neutral-900 border-t border-neutral-800 text-xs text-neutral-400 py-3.5 px-4 mt-auto">
+      <footer className="bg-neutral-900 border-t border-neutral-800 text-xs text-neutral-400 py-3.5 px-4 mb-20 md:mb-16">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400" />
@@ -240,6 +241,15 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Universal Floating AI Interaction Bar */}
+      <GlobalAiBar
+        activeView={activeView}
+        onNavigate={(v) => setActiveView(v)}
+        metrics={metrics}
+        onAtomInjected={handleAtomInjected}
+        onTriggerWriteEpisode={() => setActiveView('studio')}
+      />
     </div>
   );
 }

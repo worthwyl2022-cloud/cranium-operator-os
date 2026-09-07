@@ -23,4 +23,24 @@ export class ThemeMemory {
     }
     return weights;
   }
+
+  calculateDrift(atoms: CognitiveAtom[]): number {
+    if (this.total === 0 || atoms.length === 0) return 0.0;
+    const currentWeights = this.weights();
+    if (currentWeights.size === 0) return 0.0;
+
+    const recent = atoms.slice(-10);
+    const recentTags = recent.flatMap(a => (Array.isArray(a.tags) ? a.tags : Array.from(a.tags)));
+    if (recentTags.length === 0) return 0.0;
+
+    let matchScore = 0;
+    for (const tag of recentTags) {
+      if (currentWeights.has(tag)) {
+        matchScore += currentWeights.get(tag) || 0;
+      }
+    }
+    const normalizedMatch = matchScore / recentTags.length;
+    const drift = Math.max(0.0, Math.min(1.0, 1.0 - normalizedMatch));
+    return Number(drift.toFixed(3));
+  }
 }

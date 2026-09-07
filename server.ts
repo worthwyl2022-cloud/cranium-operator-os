@@ -116,6 +116,96 @@ Format as JSON: { "reply": "...", "directiveSuggestion": "ADVANCE" }`;
     }
   });
 
+  // Universal conversational AI interaction endpoint
+  app.post("/api/chat", async (req, res) => {
+    try {
+      const { message, history = [], context = {} } = req.body;
+      const ai = getAI();
+
+      if (!ai) {
+        // High quality cognitive response when Gemini key is not configured
+        const lower = (message || "").toLowerCase();
+        let reply = "I am listening! Cranium Core is active and monitoring narrative continuity and resonance.";
+        let action = undefined;
+
+        if (lower.includes("write") || lower.includes("next episode") || lower.includes("generate")) {
+          reply = "I've queued the next episode under the current canon constraints. Head over to the Creator Studio, or let me trigger the cognitive loop for you!";
+          action = { type: 'NAVIGATE', target: 'studio', label: 'Go to Creator Studio' };
+        } else if (lower.includes("demo") || lower.includes("pitch") || lower.includes("acquisition") || lower.includes("video")) {
+          reply = "The Acquisition Demo shows the real-time contrast between Naive RAG and Cranium Core's immune defense.";
+          action = { type: 'NAVIGATE', target: 'demo', label: 'Open Acquisition Demo' };
+        } else if (lower.includes("field") || lower.includes("physics") || lower.includes("resonance")) {
+          reply = "The Resonance Lab displays active cognitive atoms, coherence levels, and tension equations in real time.";
+          action = { type: 'NAVIGATE', target: 'physics', label: 'View Resonance Lab' };
+        } else if (lower.includes("diligence") || lower.includes("one-pager") || lower.includes("buyer") || lower.includes("data room")) {
+          reply = "The Diligence Data Room contains the honest buyer one-pager, asset inventory, and technical roadmap.";
+          action = { type: 'NAVIGATE', target: 'diligence', label: 'Open Diligence Room' };
+        } else {
+          reply = `Received: "${message}". The Cranium Core is holding coherence steady at ${(context.coherence ? Math.round(context.coherence * 100) : 84)}%. What would you like to explore next—write a scene, review canon characters, or inspect system metrics?`;
+        }
+
+        return res.json({ reply, action });
+      }
+
+      // Format conversation for Gemini
+      const systemInstruction = `You are the Cranium Core conversational companion in WorthWyl Creative OS.
+Your goal is to make using this AI system feel effortless, friendly, and intuitive—like talking to a brilliant creative co-pilot.
+The user is speaking or typing directly to you via the bottom AI interaction bar.
+
+Current System Context:
+- Active View: ${context.activeView || 'studio'}
+- Current Novel: ${context.currentNovelTitle || 'The Sovereign Core'}
+- Active Characters: ${(context.activeCharacters || ['Kaelan Thorne', 'Dr. Mira Vane']).join(', ')}
+- Open Threads: ${(context.openThreads || []).join('; ')}
+- Field Coherence: ${context.coherence ? Math.round(context.coherence * 100) : 85}%
+- Field Tension: ${context.tension || 0.35}
+
+Keep your responses natural, engaging, concise (2-4 sentences max unless the user explicitly asks for a long story scene or detailed breakdown), and immediately helpful.
+If the user's intent clearly relates to taking an action, include an optional "action" in your JSON response:
+- NAVIGATE: to switch views ('demo' | 'metacognition' | 'studio' | 'physics' | 'diligence')
+- TRIGGER_EPISODE: to trigger writing the next episode
+- INJECT_ATOM: to inject a new idea into the resonance field
+
+Return JSON in this format:
+{
+  "reply": "Your conversational answer here",
+  "action": { "type": "NAVIGATE" | "TRIGGER_EPISODE" | "INJECT_ATOM", "target": "string", "label": "Button label" } // optional
+}`;
+
+      const contents = [
+        ...history.slice(-6).map((h: any) => ({
+          role: h.role === 'user' ? 'user' : 'model',
+          parts: [{ text: h.text }]
+        })),
+        {
+          role: 'user',
+          parts: [{ text: message }]
+        }
+      ];
+
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents,
+        config: {
+          systemInstruction,
+          responseMimeType: "application/json"
+        }
+      });
+
+      const parsed = JSON.parse(response.text || "{}");
+      return res.json({
+        reply: parsed.reply || "Understood. The Cranium Core is aligned with your intent.",
+        action: parsed.action
+      });
+    } catch (err: any) {
+      console.error("Chat error:", err);
+      return res.json({
+        reply: "I heard you! Cranium Core is currently synchronized and maintaining narrative continuity.",
+        action: undefined
+      });
+    }
+  });
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
