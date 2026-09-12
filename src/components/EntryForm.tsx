@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { Bot, Save } from 'lucide-react';
 
 export default function EntryForm() {
@@ -8,8 +8,19 @@ export default function EntryForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log({ situation, thought, emotion });
-    // TODO: Connect to database/core
+    const entry = {
+      id: crypto.randomUUID(),
+      situation: situation.trim(),
+      thought: thought.trim(),
+      emotion: emotion.trim(),
+      createdAt: new Date().toISOString(),
+    };
+    const stored = JSON.parse(localStorage.getItem('cranium.reflections') ?? '[]') as unknown[];
+    localStorage.setItem('cranium.reflections', JSON.stringify([...stored, entry]));
+    window.dispatchEvent(new CustomEvent('cranium:reflection-created', { detail: entry }));
+    setSituation('');
+    setThought('');
+    setEmotion('');
   };
 
   return (
