@@ -1,10 +1,11 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import { fileURLToPath } from 'url';
 import { GoogleGenAI } from "@google/genai";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// The production bundle is CommonJS. Use the process root so the same path
+// works in both `tsx` development and the bundled production entry point.
+const __dirname = process.cwd();
 
 let aiClient: GoogleGenAI | null = null;
 function getAI(): GoogleGenAI | null {
@@ -216,7 +217,7 @@ Return JSON in this format:
   } else {
     const distPath = path.join(__dirname, 'dist');
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
+    app.get('/{*splat}', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }

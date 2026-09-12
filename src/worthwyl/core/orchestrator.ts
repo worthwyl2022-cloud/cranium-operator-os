@@ -1,8 +1,9 @@
 import { CognitiveAtom, Directive, Metrics, TickRecord } from '../../types/creativeOs';
 import { CraniumLoop } from './loop';
 
-// Deterministic pseudo-embedding model (matches PDF specification)
-export class MockEmbeddingProvider {
+// Deterministic local lexical feature extractor. This is a real bounded
+// feature computation, not an authority decision.
+export class LocalFeatureProvider {
   embed(text: string): number[] {
     let h1 = 0xdeadbeef;
     let h2 = 0x41c6ce57;
@@ -48,10 +49,10 @@ export class TagSchema {
 
 export class SemanticTagger {
   private schema = TagSchema.THEMES;
-  private embedder: MockEmbeddingProvider;
+  private embedder: LocalFeatureProvider;
   private themeVectors: Record<string, number[]> = {};
 
-  constructor(embedder: MockEmbeddingProvider) {
+  constructor(embedder: LocalFeatureProvider) {
     this.embedder = embedder;
     for (const [theme, words] of Object.entries(this.schema)) {
       this.themeVectors[theme] = this.embedder.embed(words.join(' '));
@@ -86,11 +87,11 @@ export interface ArtifactRecord {
 }
 
 export class ArtifactMemory {
-  private embedder: MockEmbeddingProvider;
+  private embedder: LocalFeatureProvider;
   records: ArtifactRecord[] = [];
   themeAtoms: CognitiveAtom[] = [];
 
-  constructor(embedder: MockEmbeddingProvider) {
+  constructor(embedder: LocalFeatureProvider) {
     this.embedder = embedder;
   }
 
@@ -157,7 +158,7 @@ export class CreativeCognitiveSynthesizer {
 }
 
 export class CraniumFullStack {
-  embedder: MockEmbeddingProvider;
+  embedder: LocalFeatureProvider;
   tagger: SemanticTagger;
   memory: ArtifactMemory;
   steering: SteeringContextBuilder;
@@ -165,7 +166,7 @@ export class CraniumFullStack {
   loop: CraniumLoop;
 
   constructor() {
-    this.embedder = new MockEmbeddingProvider();
+    this.embedder = new LocalFeatureProvider();
     this.tagger = new SemanticTagger(this.embedder);
     this.memory = new ArtifactMemory(this.embedder);
     this.steering = new SteeringContextBuilder();
