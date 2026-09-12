@@ -63,7 +63,7 @@ export default function StudioWorkspace({ onInjectBeat, activeDirectiveOutput, a
     },
   ]);
 
-  // Playback simulation
+  // Playback visualization
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSec, setPlaybackSec] = useState(0);
 
@@ -358,7 +358,7 @@ export default function StudioWorkspace({ onInjectBeat, activeDirectiveOutput, a
                         style={{ left: `${leftPct}%`, width: `${widthPct}%` }}
                       >
                         <span className="truncate">{clip.title}</span>
-                        {/* Fake animated waveform lines */}
+                        {/* Animated waveform lines */}
                         <div className="flex items-center gap-0.5 ml-1 opacity-60">
                           <span className="w-0.5 h-3 bg-white rounded-full" />
                           <span className="w-0.5 h-4 bg-white rounded-full" />

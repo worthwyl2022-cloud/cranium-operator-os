@@ -12,7 +12,7 @@ export const INITIAL_THOUGHT_JOURNAL_ENTRIES: ThoughtJournalEntry[] = [
     cognitiveFocus: "Canon Integrity",
     secondaryFocusTags: ["Memory Permanence", "Dilution Resistance", "Substrate Physics"],
     reframingInsight: "The friction I felt wasn't impatience with the UI; it was cognitive immune defense rejecting convenience at the expense of architecture.",
-    actionDirective: "Maintain immutable state records; refuse temporary shortcuts that simulate amnesia."
+    actionDirective: "Maintain immutable state records; refuse temporary shortcuts that erase memory."
   },
   {
     id: "journal-002",

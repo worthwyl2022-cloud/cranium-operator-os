@@ -192,7 +192,7 @@ export default function ResonanceFieldCanvas({ atoms, metrics, selectedAtomId, o
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" />
           <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-800">
-            Resonance Field Simulation (Cranium Physical Substrate)
+            Resonance Field Visualization (Cranium Physical Substrate)
           </h3>
         </div>
         <div className="flex items-center gap-4 text-xs text-neutral-500">

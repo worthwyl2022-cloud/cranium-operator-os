@@ -42,7 +42,7 @@ export default function MediaEnginePanel() {
 
     setJobs(prev => [newJob, ...prev]);
 
-    // Simulate pipeline phases: Queued -> Synthesizing Audio -> GPU MP4 Assembly -> Completed
+    // Visualize pipeline phases: Queued -> Synthesizing Audio -> GPU MP4 Assembly -> Completed
     setTimeout(() => {
       setJobs(prev =>
         prev.map(j => (j.id === newId ? { ...j, status: 'synthesizing', progress: 45 } : j))

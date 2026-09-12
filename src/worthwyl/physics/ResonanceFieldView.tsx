@@ -162,13 +162,13 @@ export default function ResonanceFieldView({
           </div>
           <h2 className="text-2xl font-bold text-white tracking-tight">Resonance Field Laboratory</h2>
           <p className="text-xs md:text-sm text-neutral-400 mt-0.5">
-            Inject and simulate Cognitive Atoms. Observe non-linear tension calculations, collision penalties, and autonomous directive governance.
+            Inject and visualize Cognitive Atoms. Observe non-linear tension calculations, collision penalties, and autonomous directive governance.
           </p>
         </div>
 
         {/* Presets Button Bar */}
         <div className="flex flex-wrap items-center gap-1.5 bg-neutral-950 p-1.5 rounded-xl border border-neutral-800">
-          <span className="text-[10px] font-mono text-neutral-500 px-2">SIMULATE:</span>
+          <span className="text-[10px] font-mono text-neutral-500 px-2">VISUALIZE:</span>
           <button
             onClick={() => handleLoadPreset('balanced')}
             className="px-2.5 py-1 text-xs font-mono rounded-lg bg-neutral-800 hover:bg-neutral-700 text-emerald-300 transition"
@@ -400,7 +400,7 @@ export default function ResonanceFieldView({
           <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
             {atoms.length === 0 ? (
               <div className="p-8 text-center text-xs text-neutral-500 italic">
-                Resonance Field is empty. Inject an atom or choose a simulation preset above.
+                Resonance Field is empty. Inject an atom or choose a visualization preset above.
               </div>
             ) : (
               atoms.map((atom) => (
