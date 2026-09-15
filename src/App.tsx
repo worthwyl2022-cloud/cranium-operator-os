@@ -16,7 +16,17 @@ import GlobalAiBar from './worthwyl/common/GlobalAiBar';
 export type ActiveView = 'demo' | 'metacognition' | 'studio' | 'physics' | 'diligence';
 
 export default function App() {
-  const [activeView, setActiveView] = useState<ActiveView>('demo');
+  const [activeView, setActiveView] = useState<ActiveView>(() => {
+    const requestedView = window.location.hash.replace('#', '') as ActiveView;
+    return ['demo', 'metacognition', 'studio', 'physics', 'diligence'].includes(requestedView)
+      ? requestedView
+      : 'demo';
+  });
+
+  const navigateToView = (view: ActiveView) => {
+    setActiveView(view);
+    window.history.replaceState(null, '', `#${view}`);
+  };
 
   // Shared Resonance Field Substrate
   const field = useMemo(() => {
@@ -110,7 +120,7 @@ export default function App() {
           {/* Core System Navigation */}
           <nav className="flex items-center gap-1 bg-neutral-950 p-1 rounded-xl border border-neutral-800">
             <button
-              onClick={() => setActiveView('demo')}
+              onClick={() => navigateToView('demo')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                 activeView === 'demo'
                   ? 'bg-amber-500 text-neutral-950 font-bold shadow-md shadow-amber-500/10'
@@ -122,7 +132,7 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveView('metacognition')}
+              onClick={() => navigateToView('metacognition')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                 activeView === 'metacognition'
                   ? 'bg-amber-500 text-neutral-950 font-bold shadow-md shadow-amber-500/10'
@@ -134,7 +144,7 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveView('studio')}
+              onClick={() => navigateToView('studio')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                 activeView === 'studio'
                   ? 'bg-amber-500 text-neutral-950 font-bold shadow-md shadow-amber-500/10'
@@ -146,7 +156,7 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveView('physics')}
+              onClick={() => navigateToView('physics')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                 activeView === 'physics'
                   ? 'bg-amber-500 text-neutral-950 font-bold shadow-md shadow-amber-500/10'
@@ -158,7 +168,7 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveView('diligence')}
+              onClick={() => navigateToView('diligence')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                 activeView === 'diligence'
                   ? 'bg-amber-500 text-neutral-950 font-bold shadow-md shadow-amber-500/10'
@@ -192,7 +202,7 @@ export default function App() {
         )}
 
         {activeView === 'metacognition' && (
-          <MetacognitiveView onExportSummary={() => setActiveView('diligence')} />
+          <MetacognitiveView onExportSummary={() => navigateToView('diligence')} />
         )}
 
         {activeView === 'studio' && (
@@ -200,7 +210,7 @@ export default function App() {
             field={field}
             metrics={metrics}
             onAtomInjected={handleAtomInjected}
-            onNavigateToDemo={() => setActiveView('demo')}
+            onNavigateToDemo={() => navigateToView('demo')}
           />
         )}
 
@@ -230,7 +240,7 @@ export default function App() {
 
           <div className="flex items-center gap-4 text-neutral-400">
             <button
-              onClick={() => setActiveView('diligence')}
+              onClick={() => navigateToView('diligence')}
               className="hover:text-amber-400 transition underline font-mono text-[11px]"
             >
               Export Complete Package (.md)
@@ -248,7 +258,7 @@ export default function App() {
         onNavigate={(v) => setActiveView(v)}
         metrics={metrics}
         onAtomInjected={handleAtomInjected}
-        onTriggerWriteEpisode={() => setActiveView('studio')}
+        onTriggerWriteEpisode={() => navigateToView('studio')}
       />
     </div>
   );
