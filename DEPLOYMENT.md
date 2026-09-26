@@ -1,17 +1,17 @@
-# Cranium OS deployment
+# Cranium Metacognitive Mapper deployment
 
-This repository deploys the **WorthWyl Creative OS / Cranium Operator OS** as a browser application through the `Deploy Cranium OS` GitHub Actions workflow.
+This repository deploys the **WorthWyl Creative OS / Cranium Metacognitive Mapper** as a browser application through the `Deploy Cranium Metacognitive Mapper` GitHub Actions workflow.
 
-The **Metacognitive Tracker** is a first-class module within the same application. After deployment, open it directly with the hash route:
+The **Cranium Metacognitive Mapper** is a first-class module within the same application. After deployment, open it directly with the hash route:
 
 ```text
-https://worthwyl2022-cloud.github.io/cranium-operator-os/#metacognition
+https://worthwyl2022-cloud.github.io/cranium-metacognitive-mapper/#metacognition
 ```
 
 The default application entry point is:
 
 ```text
-https://worthwyl2022-cloud.github.io/cranium-operator-os/
+https://worthwyl2022-cloud.github.io/cranium-metacognitive-mapper/
 ```
 
 The deployment is client-side and local-first for the tracker. Entries are stored in the browser’s local storage and are not transmitted to a server by this deployment. The application includes an acquisition demo, metacognitive tracker, creator studio, resonance lab, and diligence room.

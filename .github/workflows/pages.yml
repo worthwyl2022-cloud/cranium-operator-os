@@ -1,4 +1,4 @@
-name: Deploy Cranium OS
+name: Deploy Cranium Metacognitive Mapper
 
 on:
   push:
