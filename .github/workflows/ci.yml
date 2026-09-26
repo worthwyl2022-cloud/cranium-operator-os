@@ -1,4 +1,4 @@
-name: Cranium Core OS CI
+name: Cranium Metacognitive Mapper CI
 
 on:
   push:
@@ -20,7 +20,6 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
       - run: npm ci
-      - run: npm rebuild esbuild
       - run: npm run lint
       - run: npm run build
       - run: npm audit --omit=dev --audit-level=high
