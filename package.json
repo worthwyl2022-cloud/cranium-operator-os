@@ -36,5 +36,9 @@
   },
   "overrides": {
     "qs": "^6.16.0"
+  },
+  "optionalDependencies": {
+    "@esbuild/linux-x64": "0.25.12",
+    "@esbuild/android-arm64": "0.25.12"
   }
 }
