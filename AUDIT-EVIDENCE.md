@@ -2,7 +2,7 @@
 
 ## Snapshot
 
-- Repository: `worthwyl2022-cloud/cranium-operator-os`
+- Repository: `worthwyl2022-cloud/cranium-metacognitive-mapper`
 - Default working branch observed: `main`
 - Commit count at inventory: `7`
 - Files at inventory: `51`
