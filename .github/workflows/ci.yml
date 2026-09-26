@@ -1,4 +1,4 @@
-name: Cranium Core OS CI
+name: Cranium Metacognitive Mapper CI
 
 on:
   push:
